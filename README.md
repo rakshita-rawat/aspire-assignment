@@ -4,13 +4,13 @@ A full-stack web application for tracking GitHub repositories and their latest r
 
 ## Features
 
-- ✅ **Track Repositories**: Add GitHub repositories by URL to track their updates
-- ✅ **Latest Release Information**: View the latest release version, date, and release notes
-- ✅ **Seen/Unseen Status**: Mark releases as "seen" and visually identify repositories with unseen updates
-- ✅ **Manual Refresh**: Refresh individual repositories or all repositories at once
-- ✅ **Automatic Sync**: Periodic background updates every 24 hours
-- ✅ **Responsive UI**: Modern, intuitive interface that works on desktop and mobile
-- ✅ **Client-side Caching**: Optimized performance with Apollo Client caching
+- **Track Repositories**: Add GitHub repositories by URL to track their updates
+- **Latest Release Information**: View the latest release version, date, and release notes
+- **Seen/Unseen Status**: Mark releases as "seen" and visually identify repositories with unseen updates
+- **Manual Refresh**: Refresh individual repositories or all repositories at once
+- **Automatic Sync**: Periodic background updates every 24 hours
+- **Responsive UI**: Modern, intuitive interface that works on desktop and mobile
+- **Client-side Caching**: Optimized performance with Apollo Client caching
 
 ## Tech Stack
 
@@ -34,22 +34,39 @@ A full-stack web application for tracking GitHub repositories and their latest r
 aspire-assignment/
 ├── backend/
 │   ├── src/
-│   │   ├── schema/          # GraphQL type definitions
-│   │   ├── resolvers/        # GraphQL resolvers
-│   │   ├── models/           # Database models and business logic
-│   │   ├── services/         # External service integrations (GitHub API)
-│   │   ├── utils/            # Utility functions (database connection)
-│   │   └── index.ts          # Server entry point
-│   ├── migrations/           # Database migration files
-│   ├── scripts/              # Setup and utility scripts
+│   │   ├── config/           # Configuration (database, env)
+│   │   ├── errors/            # Custom error classes
+│   │   ├── models/            # Database models and business logic
+│   │   ├── resolvers/         # GraphQL resolvers (queries, mutations)
+│   │   ├── schema/            # GraphQL type definitions
+│   │   ├── services/          # Service layer (GitHub API, mock data)
+│   │   ├── types/             # TypeScript type definitions
+│   │   ├── utils/             # Utility functions (logger, validation, mappers)
+│   │   └── index.ts           # Server entry point
+│   ├── migrations/            # Database migration files
+│   ├── scripts/               # Setup and utility scripts
+│   ├── .env.example           # Environment variables template
 │   └── package.json
 ├── frontend/
 │   ├── src/
-│   │   ├── components/       # React components
-│   │   ├── graphql/          # Apollo Client setup and queries
-│   │   ├── types/            # TypeScript type definitions
-│   │   ├── App.tsx           # Main app component
-│   │   └── main.tsx          # Entry point
+│   │   ├── components/        # React components (each in own folder)
+│   │   │   ├── Dashboard/
+│   │   │   ├── Header/
+│   │   │   ├── AddRepositoryForm/
+│   │   │   ├── RepositoriesList/
+│   │   │   ├── RepositoryCard/
+│   │   │   ├── RepositoryFilters/
+│   │   │   ├── ReleaseDetails/
+│   │   │   ├── LoadingState/
+│   │   │   ├── ErrorState/
+│   │   │   └── EmptyState/
+│   │   ├── graphql/           # Apollo Client setup and queries
+│   │   ├── styles/            # Global styles (variables, mixins)
+│   │   ├── types/             # TypeScript type definitions
+│   │   ├── App.tsx            # Main app component
+│   │   └── main.tsx           # Entry point
+│   ├── public/                # Static assets (favicon)
+│   ├── .env.example           # Environment variables template
 │   └── package.json
 └── README.md
 ```
@@ -229,7 +246,7 @@ The frontend will be running at `http://localhost:3000`
    npm run dev
    ```
 
-   ✅ Backend will be available at `http://localhost:4000/graphql`
+   Backend will be available at `http://localhost:4000/graphql`
 
 4. **Set up and start the Frontend** (Terminal 2):
 
@@ -241,7 +258,7 @@ The frontend will be running at `http://localhost:3000`
    npm run dev
    ```
 
-   ✅ Frontend will be available at `http://localhost:3000`
+   Frontend will be available at `http://localhost:3000`
 
 5. **Open your browser** and navigate to `http://localhost:3000`
 
@@ -264,28 +281,30 @@ For local development without needing a GitHub token:
 
 ## Usage
 
-1. **Add a Repository**:
+1. **Add a Repository**: Enter a GitHub repository URL (e.g., `https://github.com/facebook/react` or `facebook/react`) and click "Add Repository". If `USE_MOCK_DATA=true`, try `facebook/react`, `vercel/next.js`, `angular/angular`, or `vuejs/vue` for mock releases.
 
-   - Enter a GitHub repository URL (e.g., `https://github.com/facebook/react` or `facebook/react`)
-   - Click "Add Repository"
+2. **View Release Information**: Each repository card shows the latest release version, date, and notes. Repositories with unseen updates are highlighted with a colored border and "New Update" badge.
 
-2. **View Release Information**:
+3. **View Release Details**: Click "View Details" to see full release notes and commit history in a modal.
 
-   - Each repository card shows the latest release version, date, and notes
-   - Repositories with unseen updates are highlighted with a green border and "New Update" badge
+4. **Mark as Seen**: Click "Mark as Seen" on a release to remove the visual indicator.
 
-3. **Mark as Seen**:
+5. **Refresh Data**: Click the refresh button on a repository card to update it, or click "Refresh All" to update all repositories. Automatic refresh runs every 24 hours.
 
-   - Click "Mark as Seen" on a release to indicate you've reviewed it
-   - The visual indicator will disappear
+6. **Filter and Sort**:
 
-4. **Refresh Data**:
+   - **Filter Options**:
+     - **All**: Shows all tracked repositories regardless of update status
+     - **Has Updates**: Shows only repositories that have a latest release that hasn't been marked as "seen" yet. This helps you quickly identify which repositories have new releases you haven't reviewed
+     - **No Updates**: Shows repositories that either have no releases, or all their releases have been marked as "seen". These are repositories that don't require your attention
+   - **Sort Options**:
+     - **Name (A-Z)**: Sorts repositories alphabetically by their full name (e.g., `angular/angular` comes before `facebook/react`)
+     - **Name (Z-A)**: Sorts repositories in reverse alphabetical order
+     - **Date Added (Newest First)**: Shows the most recently added repositories at the top, useful for seeing what you've tracked recently
+     - **Date Added (Oldest First)**: Shows the oldest tracked repositories first, useful for seeing what you've been tracking the longest
+     - **Update Status**: Prioritizes repositories with unseen updates at the top, followed by repositories without updates. This is useful for quickly identifying which repositories need your attention
 
-   - Click the refresh button (🔄) on a repository card to manually update it
-   - Click "Refresh All" to update all repositories at once
-
-5. **Remove Repository**:
-   - Click the delete button (🗑️) to stop tracking a repository
+7. **Remove Repository**: Click the delete button to stop tracking a repository.
 
 ## API Documentation
 
@@ -402,54 +421,38 @@ npm run preview  # Preview production build
 
 ## What's Implemented
 
-### Core Requirements ✅
+### Core Requirements
 
-- [x] React app with TypeScript
-- [x] Intuitive and responsive UI
-- [x] Add repositories to track
-- [x] View latest release information
-- [x] Mark releases as "seen"
-- [x] Visual indicators for unseen updates
-- [x] GraphQL API integration
-- [x] Client-side caching
-- [x] Node.js backend with GraphQL
-- [x] PostgreSQL database
-- [x] GitHub API integration with Octokit
-- [x] Periodic data synchronization (24-hour intervals)
-- [x] Manual refresh functionality
+- React app with TypeScript
+- Intuitive and responsive UI
+- Add repositories to track
+- View latest release information
+- Mark releases as "seen"
+- Visual indicators for unseen updates
+- GraphQL API integration
+- Client-side caching
+- Node.js backend with GraphQL
+- PostgreSQL database
+- GitHub API integration with Octokit
+- Periodic data synchronization (24-hour intervals)
+- Manual refresh functionality
 
-### Stretch Goals (Optional) ✅
+### Stretch Goals Implemented
 
-- [x] **Release Details**: Detailed release view with commit history and release notes
-- [x] **Filters and Sorting**: Filter by update status, sort by name (A-Z/Z-A), date (newest/oldest), or update status
-- [x] **Mobile Responsiveness**: Fully responsive design that works on mobile devices
-- [x] **Mock Data Service**: Local development server with test data for rapid iteration without GitHub API
-- [ ] Desktop notifications
-- [ ] User authentication (GitHub OAuth)
-- [ ] Webhook-based real-time updates
+- **Release Details**: Detailed release view with commit history and release notes
+- **Filters and Sorting**: Filter by update status, sort by name (A-Z/Z-A), date (newest/oldest), or update status
+- **Mobile Responsiveness**: Fully responsive design that works on mobile devices
+- **Mock Data Service**: Local development server with test data for rapid iteration without GitHub API
+
+### Future Enhancements
+
+- Desktop notifications
+- User authentication (GitHub OAuth)
+- Webhook-based real-time updates
 
 ## Implementation Notes
 
-### What's Implemented
-
-#### Core Features ✅
-
-- **Repository Tracking**: Add repositories using full GitHub URLs or short form (owner/repo)
-- **Release Information**: Display latest release version, date, and release notes
-- **Seen/Unseen Status**: Track which releases have been reviewed with visual indicators
-- **Manual Refresh**: Individual repository refresh and "Refresh All" functionality
-- **Automatic Sync**: Background refresh every 24 hours (configurable)
-- **Client-side Caching**: Apollo Client with cache-and-network policy for optimal performance
-
-#### Stretch Goals Implemented ✅
-
-- **Release Details Modal**: Click "View Details" to see full release notes and commit history
-- **Filtering**: Filter repositories by "All", "Has Updates", or "No Updates"
-- **Sorting**: Sort by Name (A-Z/Z-A), Date Added (Newest/Oldest First), or Update Status
-- **Mobile Responsive**: Fully functional on mobile devices with responsive breakpoints
-- **Mock Data Service**: Set `USE_MOCK_DATA=true` in backend `.env` for local development without GitHub API
-
-#### Technical Implementation
+### Technical Implementation
 
 - **Type Safety**: Full TypeScript coverage with no `any` types
 - **Error Handling**: Custom error classes (ValidationError, NotFoundError, ExternalServiceError, DatabaseError)
@@ -482,82 +485,23 @@ If given more time, I would prioritize the following enhancements:
 
 ### High Priority
 
-1. **User Authentication**: Implement GitHub OAuth to personalize tracked repositories per user. This would require:
-
-   - User table in database
-   - Authentication middleware
-   - User-specific repository tracking
-   - Session management
-
-2. **Release History**: Store and display all releases (not just the latest) for each repository:
-
-   - Expand database schema to track multiple releases
-   - Add pagination for release history
-   - UI to browse through past releases
-
-3. **Webhooks Integration**: Replace periodic polling with GitHub webhooks for real-time updates:
-
-   - Set up webhook endpoints
-   - Handle webhook events from GitHub
-   - More efficient and real-time than polling
-
-4. **Testing**: Comprehensive test coverage:
-   - Unit tests for services, models, and utilities
-   - Integration tests for GraphQL resolvers
-   - Frontend component tests with React Testing Library
-   - E2E tests for critical user flows
+1. **User Authentication**: Implement GitHub OAuth to personalize tracked repositories per user
+2. **Release History**: Store and display all releases (not just the latest) for each repository
+3. **Testing**: Comprehensive test coverage (unit, integration, E2E) for both backend and frontend
+4. **Webhooks Integration**: Replace periodic polling with GitHub webhooks for real-time updates
 
 ### Medium Priority
 
-5. **Notifications**: Browser/desktop notifications for new releases:
-
-   - Browser Notification API integration
-   - User preferences for notification settings
-   - Notification history
-
-6. **Backend Filtering/Sorting**: Move filtering and sorting to the backend for better scalability:
-
-   - GraphQL query arguments for filters and sort
-   - Database-level sorting and filtering
-   - Support for pagination
-
-7. **Pagination**: Implement pagination for repositories and releases:
-
-   - Cursor-based or offset-based pagination
-   - Infinite scroll or page-based navigation
-   - Performance optimization for large datasets
-
-8. **Search Functionality**: Add search to find repositories quickly:
-   - Full-text search on repository names and descriptions
-   - Search filters (by owner, language, etc.)
-   - Search history
+5. **Backend Filtering/Sorting**: Move filtering and sorting to the backend for better scalability
+6. **Pagination**: Implement pagination for repositories and releases
+7. **Notifications**: Browser/desktop notifications for new releases
+8. **Search Functionality**: Add search to find repositories quickly
 
 ### Nice to Have
 
-9. **CI/CD Pipeline**: Automated testing and deployment:
-
-   - GitHub Actions for automated testing
-   - Automated deployment to staging/production
-   - Code quality checks (linting, type checking)
-
-10. **Performance Optimizations**:
-
-    - Database query optimization and indexing
-    - GraphQL query batching
-    - Image optimization and lazy loading
-    - Service worker for offline support
-
-11. **Enhanced UI/UX**:
-
-    - Dark mode support
-    - Keyboard shortcuts
-    - Drag-and-drop repository reordering
-    - Export tracked repositories (JSON/CSV)
-
-12. **Analytics & Insights**:
-    - Track which repositories update most frequently
-    - Release frequency statistics
-    - Time since last release metrics
+9. **Performance Optimizations**: Database indexing, GraphQL DataLoader, Redis caching
+10. **Enhanced UI/UX**: Dark mode, keyboard shortcuts, export functionality
+11. **CI/CD Pipeline**: Automated testing and deployment workflows
 
 ## Troubleshooting
 
