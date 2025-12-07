@@ -1,0 +1,26 @@
+@import "../../styles/variables";
+
+.app {
+  min-height: 100vh;
+  background: $gradient-primary;
+  padding: $spacing-xl;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .app {
+    padding: $spacing-md;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .app {
+    padding: $spacing-sm;
+  }
+}
+

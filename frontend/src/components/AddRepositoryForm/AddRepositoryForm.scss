@@ -1,0 +1,94 @@
+@import "../../styles/variables";
+
+.add-repository-form {
+  background: $bg-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  box-shadow: $shadow-sm;
+  transition: all $transition-normal;
+  margin-bottom: $spacing-2xl;
+
+  h2 {
+    margin: 0 0 $spacing-xl 0;
+    font-size: $font-size-3xl;
+    color: $text-primary;
+  }
+
+  .group {
+    margin-bottom: $spacing-lg;
+
+    label {
+      display: block;
+      margin-bottom: $spacing-sm;
+      font-weight: $font-weight-semibold;
+      color: $text-primary;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px $spacing-md;
+      border: 1px solid $border-light;
+      border-radius: $radius-md;
+      font-size: $font-size-lg;
+      transition: border-color $transition-fast;
+      background: $bg-primary;
+      color: $text-primary;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.1);
+      }
+
+      &:disabled {
+        background: $bg-secondary;
+        cursor: not-allowed;
+      }
+
+      &.error {
+        border-color: $danger-color;
+      }
+    }
+  }
+
+  .error-message {
+    display: block;
+    margin-top: 6px;
+    color: $danger-color;
+    font-size: $font-size-base;
+  }
+
+  .btn {
+    width: 100%;
+    padding: $spacing-md;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .add-repository-form {
+    padding: $spacing-xl;
+
+    h2 {
+      font-size: $font-size-2xl;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .add-repository-form {
+    padding: $spacing-lg;
+
+    h2 {
+      font-size: 1.1rem;
+    }
+
+    .group input {
+      font-size: $font-size-md;
+      padding: $spacing-sm 10px;
+    }
+  }
+}
+

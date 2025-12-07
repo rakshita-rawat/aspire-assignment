@@ -1,0 +1,38 @@
+@import "../../styles/variables";
+
+.empty-state {
+  background: $bg-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-4xl;
+  box-shadow: $shadow-sm;
+  transition: all $transition-normal;
+  text-align: center;
+
+  h2 {
+    color: $text-primary;
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    color: $text-secondary;
+    font-size: $font-size-xl;
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .empty-state {
+    padding: $spacing-3xl $spacing-2xl;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .empty-state {
+    padding: $spacing-2xl $spacing-lg;
+
+    h2 {
+      font-size: $font-size-2xl;
+    }
+  }
+}
+

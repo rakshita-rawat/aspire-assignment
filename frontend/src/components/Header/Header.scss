@@ -1,0 +1,73 @@
+@import "../../styles/variables";
+
+.header {
+  color: white;
+  margin-bottom: $spacing-3xl;
+  padding: $spacing-3xl 0;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+  }
+
+  &__icon {
+    font-size: 3rem;
+    color: white;
+    opacity: 0.9;
+    flex-shrink: 0;
+  }
+
+  h1 {
+    font-size: $font-size-5xl;
+    margin: 0 0 $spacing-sm 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  &__subtitle {
+    font-size: $font-size-xl;
+    opacity: 0.9;
+    margin: 0;
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .header {
+    padding: $spacing-2xl 0;
+    margin-bottom: $spacing-2xl;
+
+    &__content {
+      flex-direction: column;
+      text-align: center;
+      gap: $spacing-md;
+    }
+
+    &__icon {
+      font-size: 2.5rem;
+    }
+
+    h1 {
+      font-size: $font-size-4xl;
+    }
+
+    &__subtitle {
+      font-size: $font-size-lg;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .header {
+    padding: $spacing-xl 0;
+    margin-bottom: $spacing-xl;
+
+    h1 {
+      font-size: $font-size-3xl;
+    }
+
+    &__subtitle {
+      font-size: $font-size-md;
+    }
+  }
+}

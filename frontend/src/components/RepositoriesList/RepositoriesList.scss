@@ -1,0 +1,98 @@
+@import "../../styles/variables";
+
+.repositories-list {
+  margin-top: $spacing-2xl;
+
+  &__container {
+    background: $bg-primary;
+    border-radius: $radius-lg;
+    padding: $spacing-2xl;
+    box-shadow: $shadow-sm;
+    transition: all $transition-normal;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-xl;
+    margin-bottom: $spacing-2xl;
+    padding-bottom: $spacing-xl;
+    border-bottom: 2px solid $border-color;
+    flex-wrap: wrap;
+  }
+
+  &__filters {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+
+    .btn {
+      padding: $spacing-sm $spacing-xl;
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      display: inline-flex;
+      align-items: center;
+      gap: $spacing-sm;
+
+      svg {
+        font-size: $font-size-lg;
+      }
+    }
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+}
+
+.btn--spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .repositories-list {
+    &__container {
+      padding: $spacing-xl;
+    }
+
+    &__header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: $spacing-lg;
+      padding-bottom: $spacing-lg;
+    }
+
+    &__filters {
+      width: 100%;
+      min-width: auto;
+    }
+
+    &__actions {
+      width: 100%;
+      justify-content: flex-end;
+
+      .btn {
+        padding: $spacing-sm $spacing-lg;
+        font-size: $font-size-md;
+      }
+    }
+  }
+}
+

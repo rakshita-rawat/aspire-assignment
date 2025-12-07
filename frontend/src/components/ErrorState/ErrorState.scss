@@ -1,0 +1,39 @@
+@import "../../styles/variables";
+
+.error-state {
+  background: $bg-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  box-shadow: $shadow-sm;
+  transition: all $transition-normal;
+  text-align: center;
+  padding: $spacing-4xl;
+
+  h2 {
+    color: $danger-color;
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    color: $text-secondary;
+    margin-bottom: $spacing-xl;
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .error-state {
+    padding: $spacing-3xl $spacing-2xl;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .error-state {
+    padding: $spacing-2xl $spacing-lg;
+
+    h2 {
+      font-size: $font-size-2xl;
+    }
+  }
+}
+

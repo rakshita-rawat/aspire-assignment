@@ -1,0 +1,30 @@
+@import "../../styles/variables";
+
+.loading-state {
+  background: $bg-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  box-shadow: $shadow-sm;
+  transition: all $transition-normal;
+
+  &__content {
+    color: $text-secondary;
+    font-size: $font-size-xl;
+    text-align: center;
+    padding: $spacing-4xl;
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .loading-state {
+    padding: $spacing-3xl $spacing-2xl;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .loading-state {
+    padding: $spacing-2xl $spacing-lg;
+  }
+}
+
